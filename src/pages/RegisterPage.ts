@@ -1,6 +1,7 @@
 import { type Locator, type Page, expect } from '@playwright/test';
+import { NavMenu } from './NavigationMenu';
 
-export class ParabankRegister {
+export class Register {
     readonly page: Page;
     readonly registerLink: Locator;
     readonly firstNameTextbox: Locator;
@@ -52,6 +53,20 @@ export class ParabankRegister {
         await this.confirmPasswordTextbox.fill(password);
         await this.registerButton.click();
         await expect(this.page.locator('#rightPanel')).toContainText('Your account was created successfully. You are now logged in.');
-      }    
+      }
+      
+      async getAccountNumber(): Promise<string> {
+        const navMenu = new NavMenu(this.page);
+        await navMenu.accountsOverviewLink.click();
+        const accountNumber = await this.page.locator('xpath=//td/a').innerText();
+        return accountNumber;
+      }
+
+      async getAccountBalance(accountNumber:string): Promise<string> {
+        const navMenu = new NavMenu(this.page);
+        await navMenu.accountsOverviewLink.click({force:true});
+        const accountBalance = await this.page.locator(`xpath=//a[contains(text(),"${accountNumber}")]//parent::td//following-sibling::td`).first().innerText();
+        return accountBalance.trim();
+      }
       
 }

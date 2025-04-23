@@ -1,7 +1,7 @@
 import { type Locator, type Page, expect } from '@playwright/test';
-import { ParabankLogin } from './LoginPage';
+import { Login } from './LoginPage';
 
-export class ParabankNavMenu {
+export class NavMenu {
     readonly page: Page;
     readonly openAccountLink: Locator;
     readonly accountsOverviewLink: Locator;
@@ -41,7 +41,7 @@ export class ParabankNavMenu {
             await expect(this.page.getByRole('heading', { name: 'Apply for a Loan' })).toBeVisible();
             await this.logOutLink.click();
             await expect(this.page.getByRole('heading', { name: 'Customer Login' })).toBeVisible();
-            const loginPage = new ParabankLogin(this.page);
+            const loginPage = new Login(this.page);
             await loginPage.login(username, password);
         }
 }
