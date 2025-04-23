@@ -13,6 +13,7 @@ import { BillPay } from '../../src/pages/BillPayPage';
 //   await page.goto('https://parabank.parasoft.com/');
 // })
 
+//only added test data here that needs to be reused multiple times in respect of time
 let testData = {
   username: faker.internet.username(),
   password: faker.internet.password(),
